@@ -202,3 +202,9 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   tzinfo-data
+
+RUBY VERSION
+   ruby 2.7.2p137
+
+BUNDLED WITH
+   2.2.30
