@@ -28,16 +28,3 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build
-
-dependencies:
-  pre:
-    - gem -v
-    - rbenv @global do gem uninstall bundler -ax
-    - rbenv install rubygems 2.4.8 --force
-    - gem install bundler --pre
-    - bundle -v
-
-test:
-  override:
-    - bundle -v
-    - bundle exec bundle -v
