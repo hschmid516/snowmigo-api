@@ -40,6 +40,10 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+CircleCi.configure do |config|
+  config.token = 'yjYOXwBnyauHFG6Nhr9c6bcZXcw1CVHA6hQugVi+xdg'
+end
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
