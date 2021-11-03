@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :user do
     name { "MyString" }
     email { "MyString" }
-    password_digest { "MyString" }
     exp_level { 1 }
     ski_pass { "MyString" }
     address { "MyString" }

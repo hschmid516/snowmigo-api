@@ -37,7 +37,8 @@ RSpec.describe "Users", type: :request do
     end
 
     describe "GET /create" do
-      let(:valid_attributes) { {
+      it "can create a user" do
+        valid_attributes = {
           name: 'John',
           email: 'john@email.com',
           exp_level: 0,
@@ -46,9 +47,7 @@ RSpec.describe "Users", type: :request do
           ski_or_board: 0,
           emergency_name: 'mary',
           emergency_number: '9679897987'
-        }}
-
-      it "returns http success" do
+          }
         post "/api/v1/users", params: { user: valid_attributes }
         user = User.last
 
@@ -56,12 +55,32 @@ RSpec.describe "Users", type: :request do
         expect(user.name).to eq(valid_attributes[:name])
         expect(json[:data][:attributes][:name]).to eq(valid_attributes[:name])
       end
+
+      it 'creates user or finds if existing' do
+        valid_attributes = {
+          name: 'Tim',
+          email: 'tim@email.com'
+        }
+        post "/api/v1/users", params: { user: valid_attributes }
+        user = User.last
+
+        expect(response).to have_http_status(:created)
+        expect(user.name).to eq(valid_attributes[:name])
+        expect(json[:data][:id]).to eq("#{user.id}")
+
+        post "/api/v1/users", params: { user: valid_attributes }
+        user = User.last
+
+        expect(response).to have_http_status(:ok)
+        expect(user.name).to eq(valid_attributes[:name])
+        expect(json[:data][:id]).to eq("#{user.id}")
+      end
     end
 
     describe "GET /update" do
       let(:new_attribute) { { name: 'Steve' } }
 
-      it "returns http success" do
+      it "can update a user" do
         patch "/api/v1/users/#{users.first.id}", params: { user: new_attribute }
         user = User.find(users.first.id)
 
@@ -72,7 +91,7 @@ RSpec.describe "Users", type: :request do
     end
 
     describe "GET /destroy" do
-      it "returns http success" do
+      it "can delete a user" do
         get "/api/v1/users/#{users.first.id}"
 
         expect(User.count).to eq(10)
