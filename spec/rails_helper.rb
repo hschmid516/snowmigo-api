@@ -44,6 +44,8 @@ CircleCi.configure do |config|
   config.token = 'yjYOXwBnyauHFG6Nhr9c6bcZXcw1CVHA6hQugVi+xdg'
 end
 
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
@@ -55,6 +57,8 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  config.include RequestSpecHelper, type: :request
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
