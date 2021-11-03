@@ -7,6 +7,7 @@ FactoryBot.define do
     ski_pass { "MyString" }
     address { "MyString" }
     ski_or_board { 1 }
-    emergency_contact { "MyString" }
+    emergency_name { "MyString" }
+    emergency_number { 9284802695 }
   end
 end
