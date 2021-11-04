@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe "Users", type: :request do
   describe 'Setup' do
     let(:users) { create_list(:user, 10) }
-
     # describe "GET /index" do
     #   it "returns http success" do
     #     get "/api/v1/"
@@ -16,6 +15,7 @@ RSpec.describe "Users", type: :request do
         get "/api/v1/users/#{users.first.id}"
         expect(response).to be_successful
 
+        binding.pry
         expect(json).to be_a Hash
 
         expect(json[:data]).to be_a Hash
