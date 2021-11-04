@@ -93,3 +93,53 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+def resort_info
+{
+   :id=>"303001",
+   :resortName=>"Arapahoe Basin",
+   :state=>"CO",
+   :country=>"USA",
+   :reportDateTime=>"2021-11-03 06:01:00",
+   :resortStatus=>"1",
+   :operatingStatus=>"",
+   :resortType=>"NA_Alpine",
+   :newSnowMin=>"3",
+   :newSnowMax=>"",
+   :primarySurfaceCondition=>"Machine Groomed",
+   :snowLast48Hours=>"5",
+   :avgBaseDepthMin=>"21",
+   :avgBaseDepthMax=>"21",
+   :openDownHillTrails=>"1",
+   :openDownHillLifts=>"1",
+   :openDownHillMiles=>"",
+   :openDownHillAcres=>"28",
+   :openDownHillPercent=>"1",
+   :nightSkiing=>"",
+   :weekendHours=>"Sat/Sun: 8:30a-4p",
+   :weekdayHours=>"Mon-Fri: 8:30a-4p",
+   :snowComments=>"5\" past 3 days",
+   :maxOpenDownHillTrails=>"147",
+   :maxOpenDownHillMiles=>"0",
+   :maxOpenDownHillAcres=>"1428",
+   :maxOpenDownHillLifts=>"9",
+   :covidMaskRequired=>"1",
+   :covidUpdatedOn=>"2021-10-14 12:23:06",
+   :covidSocialDistancingRequired=>"0",
+   :covidSanitizationStationsAvailable=>"0",
+   :covidPassProtection=>"0",
+   :covidReservationsRequired=>"0",
+   :covidPrePurchaseDayLiftTicketsRecommended=>"0",
+   :resortCovidPage=>"https://www.arapahoebasin.com/the-mountain/winter-covid-19-precautions/",
+   :covidPassProtectionPage=>"",
+   :covidReservationsRequiredPage=>"",
+   :tnTrailMapURL=>"http://www.snocountry.com/trail_maps/large_trail_maps/large_thumbnails/303001.gif",
+   :lgTrailMapURL=>"http://feeds.snocountry.net/trailmapDisplay.php?permcode=303001",
+   :logo=>"http://snocountry.com/ski_area_logos/303001logo.jpg",
+   :timezone=>"",
+   :resortAddress=>",  , CO",
+   :maxXCSkiTrails=>"",
+   :"Parks-n-Pipes"=>" Parks Open ",
+   :"Parks-n-Pipes-Available"=>"No"
+}
+end
