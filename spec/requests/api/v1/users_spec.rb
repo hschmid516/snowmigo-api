@@ -15,7 +15,6 @@ RSpec.describe "Users", type: :request do
         get "/api/v1/users/#{users.first.id}"
         expect(response).to be_successful
 
-        binding.pry
         expect(json).to be_a Hash
 
         expect(json[:data]).to be_a Hash
