@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       resources :resorts, only: [:index, :show]
+      resources :trips, only: %i[index show create update destroy]
     end
   end
 end
