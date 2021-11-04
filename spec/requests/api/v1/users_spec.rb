@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe "Users", type: :request do
   describe 'Setup' do
     let(:users) { create_list(:user, 10) }
-
     # describe "GET /index" do
     #   it "returns http success" do
     #     get "/api/v1/"
