@@ -11,8 +11,14 @@ class Api::V1::UsersController < Api::V1::Users::BaseController
   end
 
   def create
-    new_user = User.create!(user_params)
-    serialize(new_user, :created)
+    last_user = User.last
+    new_user = User.find_or_create_by!(email: user_params[:email])
+    if new_user == last_user
+      serialize(new_user)
+    else
+      new_user.update!(user_params)
+      serialize(new_user, :created)
+    end
   end
 
   def update
@@ -21,7 +27,7 @@ class Api::V1::UsersController < Api::V1::Users::BaseController
   end
 
   def destroy
-    user.destroy
+    @user.destroy
   end
 
   private
