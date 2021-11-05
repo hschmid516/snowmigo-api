@@ -23,10 +23,10 @@ RSpec.describe "Users", type: :request do
 
         expect(json[:data][:attributes][:name]).to be_a String
         expect(json[:data][:attributes][:email]).to be_a String
-        expect(json[:data][:attributes][:exp_level]).to be_a Integer
+        expect(json[:data][:attributes][:exp_level]).to be_a String
         expect(json[:data][:attributes][:ski_pass]).to be_a String
         expect(json[:data][:attributes][:address]).to be_a String
-        expect(json[:data][:attributes][:ski_or_board]).to be_a Integer
+        expect(json[:data][:attributes][:ski_or_board]).to be_a String
         expect(json[:data][:attributes][:emergency_name]).to be_a String
         expect(json[:data][:attributes][:emergency_number]).to be_a String
 
@@ -40,10 +40,10 @@ RSpec.describe "Users", type: :request do
         valid_attributes = {
           name: 'John',
           email: 'john@email.com',
-          exp_level: 0,
+          exp_level: 'expert',
           ski_pass: 'Epic',
           address: '123 street, denver, co 80234',
-          ski_or_board: 0,
+          ski_or_board: 'ski',
           emergency_name: 'mary',
           emergency_number: '9679897987'
           }
