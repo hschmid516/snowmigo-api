@@ -4,7 +4,6 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def index
-    binding.pry
     trips = Trip.all
     serialize(trips)
   end

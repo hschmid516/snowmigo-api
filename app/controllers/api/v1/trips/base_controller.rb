@@ -2,7 +2,7 @@ class Api::V1::Trips::BaseController < ApplicationController
   private
 
   def set_trip
-    Trip.find(params[:id])
+    Trip.find(params[:user_id])
   end
 
   def serialize(trip, status = :ok)
