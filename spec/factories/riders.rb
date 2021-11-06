@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :rider do
-    trip { nil }
-    user { nil }
+    association :trip, factory: :trip
+    association :user, factory: :user
     host { false }
     driver { false }
-    budget { 1 }
+    budget { Faker::Number.within(range: 1..100) }
   end
 end

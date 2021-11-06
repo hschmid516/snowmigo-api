@@ -4,6 +4,8 @@ class Api::V1::UsersController < Api::V1::Users::BaseController
   end
 
   def index
+    users = User.all
+    serialize(users)
   end
 
   def show
