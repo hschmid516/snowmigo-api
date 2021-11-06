@@ -57,10 +57,10 @@ ActiveRecord::Schema.define(version: 2021_11_06_195742) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.integer "exp_level"
+    t.string "exp_level"
     t.string "ski_pass"
     t.string "address"
-    t.integer "ski_or_board"
+    t.string "ski_or_board"
     t.string "emergency_name"
     t.string "emergency_number"
     t.datetime "created_at", null: false
