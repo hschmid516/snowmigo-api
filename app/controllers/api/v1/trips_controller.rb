@@ -9,6 +9,7 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def show
+    serialize(@trip)
   end
 
   def create
@@ -17,9 +18,12 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def update
+    trip = Trip.update(params[:id], trip_params)
+    serialize(trip)
   end
 
   def destroy
+    render json: Trip.delete(params[:id])
   end
 
   private
