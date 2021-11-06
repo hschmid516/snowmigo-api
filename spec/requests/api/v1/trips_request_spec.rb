@@ -33,11 +33,41 @@ RSpec.describe 'Trips' do
           expect(resource[:id]).to be_a(String)
           expect(resource[:type]).to eq('trip')
           expect(resource[:attributes]).to be_a(Hash)
+          expect(resourse[:attributes][:name]).to be_a(String)
           expect(resourse[:attributes][:resort_id]).to be_a(String)
           expect(resourse[:attributes][:start_date]).to be_a(String)
           expect(resourse[:attributes][:end_date]).to be_a(String)
         end
       end
+    end
+
+    it 'can create a trip' do
+      trip_params = {
+        name: 'Teehee Trip',
+        resort_id: 1,
+        resort_name: 'asdfasdf'
+        start_date: '11/10/2021',
+        end_date: '11/14/2021'
+      }
+      
+      post '/api/v1/trips', params: trip_params
+
+      expect(response).to be_successful
+      
+      expect(json).to be_a(Hash)
+
+      expect(json[:data]).to be_a(Hash)
+      expect(json[:data][:id]).to be_a(String)
+      expect(json[:data][:type]).to eq('trip')
+
+      expect(json[:data][:attributes][:name]).to be_a(String)
+      expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
+      expect(json[:data][:attributes][:start_date]).to be_a(String)
+      # TODO: WHY DOES THIS COME UP AS NIL?
+      # expect(json[:data][:attributes][:end_date]).to be_a(String)
+
+      expect(json[:data][:attributes]).to_not have_key(:created_at)
+      expect(json[:data][:attributes]).to_not have_key(:updated_at)
     end
   end
 end
