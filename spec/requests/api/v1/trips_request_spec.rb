@@ -38,6 +38,24 @@ RSpec.describe 'Trips' do
         end
       end
 
+      it 'can find a trip' do
+        get "/api/v1/trips/#{@trips.last.id}"
+
+        expect(response).to be_successful
+
+        expect(json).to be_a(Hash)
+
+        expect(json[:data]).to be_a(Hash)
+        expect(json[:data][:id]).to be_a(String)
+        expect(json[:data][:type]).to eq('trip')
+
+        expect(json[:data][:attributes]).to be_a(Hash)
+        expect(json[:data][:attributes][:name]).to be_a(String)
+        expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
+        expect(json[:data][:attributes][:start_date]).to be_a(String)
+        expect(json[:data][:attributes][:end_date]).to be_a(String)
+      end
+
       it 'can create a trip' do
         trip_params = {
           name: 'Teehee Trip',
