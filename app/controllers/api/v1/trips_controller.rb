@@ -22,6 +22,7 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def destroy
+    render json: Trip.delete(params[:id])
   end
 
   private

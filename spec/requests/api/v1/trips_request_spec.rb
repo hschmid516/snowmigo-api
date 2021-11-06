@@ -88,6 +88,18 @@ RSpec.describe 'Trips' do
 
         expect(updated_trip.start_date).to_not eq(old_start_date)
       end
+
+      it 'can delete a trip' do
+        expect(Trip.count).to eq(10)
+        old_last_id = @trips.last.id
+
+        delete "/api/v1/trips/#{old_last_id}"
+
+        expect(response).to be_successful
+
+        expect(Trip.count).to eq(9)
+        expect{Trip.find(old_last_id)}.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end
