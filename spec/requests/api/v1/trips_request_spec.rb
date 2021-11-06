@@ -45,7 +45,6 @@ RSpec.describe 'Trips' do
       trip_params = {
         name: 'Teehee Trip',
         resort_id: 1,
-        resort_name: 'asdfasdf'
         start_date: '11/10/2021',
         end_date: '11/14/2021'
       }
