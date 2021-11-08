@@ -5,7 +5,11 @@ class Api::V1::Users::BaseController < ApplicationController
     User.find(params[:id])
   end
 
-  def serialize(user, status = :ok)
-    render json: UserSerializer.new(user), status: status
+  def serialize(user, options: nil, status: :ok)
+    if options
+      render json: UserSerializer.new(user, options), status: status
+    else
+      render json: UserSerializer.new(user), status: status
+    end
   end
 end
