@@ -6,14 +6,11 @@ RSpec.describe 'Trips' do
       @users = create_list(:user, 4)
       @resort = Resort.new({id: 1, resortName: 'Big Boi Mountain'})
       @resort2 = Resort.new({id: 2, resortName: 'Small Gorl Mountain'})
-      # @trip = create(:trip, resort_id: @resort.id)
-      # @trip1 = create(:trip, resort_id: @resort2.id)
       @trips = create_list(:trip, 10, resort_id: @resort.id)
       @riders = create(:rider, trip: @trips[0], user: @users[0])
       @riders2 = create(:rider, trip: @trips[1], user: @users[1])
       @riders3 = create(:rider, trip: @trips[1], user: @users[2])
       @riders4 = create(:rider, trip: @trips[2], user: @users[3])
-      # @riders5 = create_list(:rider, 10)
     end
 
     describe 'Index Endpoint' do
@@ -21,20 +18,18 @@ RSpec.describe 'Trips' do
         get '/api/v1/trips', params: { user_id: 1 }
 
         expect(response).to be_successful
-
         expect(json).to be_a(Hash)
-
         expect(json[:data]).to be_a(Array)
-        # expect(json[:data].count).to eq(10)
-        
-        json[:data] do |resource|
+        expect(json[:data].count).to eq(10)
+
+        json[:data].each do |resource|
           expect(resource[:id]).to be_a(String)
           expect(resource[:type]).to eq('trip')
           expect(resource[:attributes]).to be_a(Hash)
-          expect(resourse[:attributes][:name]).to be_a(String)
-          expect(resourse[:attributes][:resort_id]).to be_a(String)
-          expect(resourse[:attributes][:start_date]).to be_a(String)
-          expect(resourse[:attributes][:end_date]).to be_a(String)
+          expect(resource[:attributes][:name]).to be_a(String)
+          expect(resource[:attributes][:resort_id]).to be_an(Integer)
+          expect(resource[:attributes][:start_date]).to be_a(String)
+          expect(resource[:attributes][:end_date]).to be_a(String)
         end
       end
 
