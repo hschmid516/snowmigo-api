@@ -3,20 +3,25 @@ require 'rails_helper'
 RSpec.describe "Users", type: :request do
   describe 'Setup' do
     let(:users) { create_list(:user, 10) }
-    # describe "GET /index" do
-    #   it "returns http success" do
-    #     get "/api/v1/"
-    #     expect(response).to have_http_status(:success)
-    #   end
-    # end
+
+    describe "GET /index" do
+      it "returns http success" do
+        get "/api/v1/users"
+        expect(response).to have_http_status(:success)
+      end
+    end
 
     describe "GET /show" do
       it "returns http success" do
+        resort = Resort.new({id: 1, resortName: 'Big Boi Mountain'})
+        trip = create(:trip, resort_id: resort.id)
+        create(:rider, trip: trip, user: users.first)
+        create(:resort_option, trip: trip, resort_id: resort.id)
+
         get "/api/v1/users/#{users.first.id}"
         expect(response).to be_successful
 
         expect(json).to be_a Hash
-
         expect(json[:data]).to be_a Hash
         expect(json[:data][:id]).to be_a String
         expect(json[:data][:type]).to eq 'user'

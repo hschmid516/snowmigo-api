@@ -1,4 +1,11 @@
 class TripSerializer
   include JSONAPI::Serializer
-  attributes :resort_id, :start_date, :end_date
+
+  attributes :name,
+             :resort_id,
+             :resort_name,
+             :start_date,
+             :end_date
+
+  has_many :resort_options
 end

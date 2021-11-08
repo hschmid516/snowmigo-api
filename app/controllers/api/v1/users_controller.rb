@@ -9,7 +9,8 @@ class Api::V1::UsersController < Api::V1::Users::BaseController
   end
 
   def show
-    serialize(@user)
+    options = { include: [:trips] }
+    serialize(@user, options: options)
   end
 
   def create
@@ -19,7 +20,7 @@ class Api::V1::UsersController < Api::V1::Users::BaseController
       serialize(new_user)
     else
       new_user.update!(user_params)
-      serialize(new_user, :created)
+      serialize(new_user, status: :created)
     end
   end
 
