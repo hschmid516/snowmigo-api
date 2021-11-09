@@ -17,10 +17,10 @@ RSpec.describe "Users", type: :request do
         trip = create(:trip, resort_id: resort.id)
         create(:rider, trip: trip, user: users.first)
         create(:resort_option, trip: trip, resort_id: resort.id)
+        create(:friendship, user_id: users[0].id, friend_id: users[1].id)
 
         get "/api/v1/users/#{users.first.id}"
         expect(response).to be_successful
-
         expect(json).to be_a Hash
         expect(json[:data]).to be_a Hash
         expect(json[:data][:id]).to be_a String
@@ -34,9 +34,31 @@ RSpec.describe "Users", type: :request do
         expect(json[:data][:attributes][:ski_or_board]).to be_a String
         expect(json[:data][:attributes][:emergency_name]).to be_a String
         expect(json[:data][:attributes][:emergency_number]).to be_a String
+        expect(json[:included]).to be_a(Array)
+        expect(json[:included].first).to be_a(Hash)
+        expect(json[:included].first[:id]).to be_a(String)
+        expect(json[:included].first[:attributes]).to be_a(Hash)
+        expect(json[:included].first[:attributes][:name]).to be_a(String)
+        expect(json[:included].first[:attributes][:resort_id]).to be_a(Integer)
+        expect(json[:included].first[:attributes][:resort_name]).to be_a(String)
+        expect(json[:included].first[:attributes][:start_date]).to be_a(String)
+        expect(json[:included].first[:attributes][:end_date]).to be_a(String)
+        expect(json[:included].last[:attributes][:user_id]).to be_a(Integer)
+        expect(json[:included].last[:attributes][:friend_id]).to be_a(Integer)
+
 
         expect(json[:data][:attributes]).to_not have_key :created_at
         expect(json[:data][:attributes]).to_not have_key :updated_at
+      end
+
+      it 'returns an empty array without friends' do
+        get "/api/v1/users/#{users.first.id}"
+        expect(response).to be_successful
+
+        expect(json[:included]).to be_a(Array)
+        expect(json[:included].first).to be(nil)
+        expect(json[:included].last).to be(nil)
+
       end
     end
 

@@ -11,4 +11,5 @@ class UserSerializer
              :emergency_number
 
   has_many :trips
+  has_many :friendships
 end
