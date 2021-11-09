@@ -8,4 +8,5 @@ class TripSerializer
              :end_date
 
   has_many :resort_options
+  has_many :riders
 end
