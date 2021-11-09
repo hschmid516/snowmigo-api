@@ -13,6 +13,7 @@ RSpec.describe 'Resort Requests', :vcr do
         expect(resort[:type]).to eq 'state_resort'
         expect(resort[:id]).to be_a String
         expect(resort[:attributes][:name]).to be_a String
+        expect(resort[:attributes][:logo]).to be_a String
         expect(resort[:attributes]).to_not have_key :created_at
         expect(resort[:attributes]).to_not have_key :updated_at
       end
