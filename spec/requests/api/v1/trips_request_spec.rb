@@ -43,7 +43,6 @@ RSpec.describe 'Trips' do
         expect(json[:data]).to be_a(Hash)
         expect(json[:data][:id]).to be_a(String)
         expect(json[:data][:type]).to eq('trip')
-
         expect(json[:data][:attributes]).to be_a(Hash)
         expect(json[:data][:attributes][:name]).to be_a(String)
         expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
@@ -51,7 +50,20 @@ RSpec.describe 'Trips' do
         expect(json[:data][:attributes][:end_date]).to be_a(String)
         expect(json[:included]).to be_a(Array)
         expect(json[:included].first).to be_a(Hash)
+        expect(json[:included].first[:id]).to be_a(String)
+        expect(json[:included].first[:attributes]).to be_a(Hash)
+        expect(json[:included].first[:attributes][:user_id]).to be_a(Integer)
+        expect(json[:included].first[:attributes][:trip_id]).to be_a(Integer)
+        expect(json[:included].first[:attributes][:host]).to be_a(FalseClass)
+        expect(json[:included].first[:attributes][:driver]).to be_a(FalseClass)
+        expect(json[:included].first[:attributes][:budget]).to be_a(Integer)
+      end
 
+      it 'returns an empty array without riders' do
+        get "/api/v1/trips/#{@trips[8].id}"
+        expect(response).to be_successful
+        expect(json[:included]).to be_a(Array)
+        expect(json[:included].first).to be(nil)
       end
 
       it 'can create a trip' do
