@@ -14,6 +14,7 @@ FactoryBot.create_list(:user, 5)
 FactoryBot.create_list(:trip, 3)
 FactoryBot.create(:rider, user_id: User.first.id, trip_id: Trip.first.id)
 FactoryBot.create(:rider, user_id: User.last.id, trip_id: Trip.first.id)
+FactoryBot.create(:rider, user_id: User.last.id, trip_id: Trip.last.id)
 
 # User.create(
 #   name: "Vice Admiral Holdo",
