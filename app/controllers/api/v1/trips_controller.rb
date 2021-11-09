@@ -9,7 +9,7 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def show
-    options = { include: [:resort_options] }
+    options = { include: [:resort_options, :riders] }
     serialize(@trip, options: options)
   end
 
@@ -24,7 +24,7 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def destroy
-    render json: Trip.delete(params[:id])
+    render json: Trip.destroy(params[:id])
   end
 
   private
