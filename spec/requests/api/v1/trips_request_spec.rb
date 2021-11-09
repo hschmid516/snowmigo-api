@@ -11,6 +11,7 @@ RSpec.describe 'Trips' do
       @riders2 = create(:rider, trip: @trips[1], user: @users[1])
       @riders3 = create(:rider, trip: @trips[1], user: @users[2])
       @riders4 = create(:rider, trip: @trips[2], user: @users[3])
+      @riders5 = create(:rider, trip: @trips[9], user: @users[3])
     end
 
     describe 'Index Endpoint' do
@@ -39,7 +40,6 @@ RSpec.describe 'Trips' do
         expect(response).to be_successful
 
         expect(json).to be_a(Hash)
-
         expect(json[:data]).to be_a(Hash)
         expect(json[:data][:id]).to be_a(String)
         expect(json[:data][:type]).to eq('trip')
@@ -49,6 +49,9 @@ RSpec.describe 'Trips' do
         expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
         expect(json[:data][:attributes][:start_date]).to be_a(String)
         expect(json[:data][:attributes][:end_date]).to be_a(String)
+        expect(json[:included]).to be_a(Array)
+        expect(json[:included].first).to be_a(Hash)
+
       end
 
       it 'can create a trip' do
@@ -58,23 +61,23 @@ RSpec.describe 'Trips' do
           start_date: '11/10/2021',
           end_date: '11/14/2021'
         }
-        
+
         post '/api/v1/trips', params: trip_params
-  
+
         expect(response).to be_successful
-        
+
         expect(json).to be_a(Hash)
-  
+
         expect(json[:data]).to be_a(Hash)
         expect(json[:data][:id]).to be_a(String)
         expect(json[:data][:type]).to eq('trip')
-  
+
         expect(json[:data][:attributes][:name]).to be_a(String)
         expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
         expect(json[:data][:attributes][:start_date]).to be_a(String)
         # TODO: WHY DOES THIS COME UP AS NIL?
         # expect(json[:data][:attributes][:end_date]).to be_a(String)
-  
+
         expect(json[:data][:attributes]).to_not have_key(:created_at)
         expect(json[:data][:attributes]).to_not have_key(:updated_at)
       end
@@ -90,11 +93,11 @@ RSpec.describe 'Trips' do
         expect(response).to be_successful
 
         expect(json).to be_a(Hash)
-  
+
         expect(json[:data]).to be_a(Hash)
         expect(json[:data][:id]).to be_a(String)
         expect(json[:data][:type]).to eq('trip')
-  
+
         expect(json[:data][:attributes][:name]).to be_a(String)
         expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
         expect(json[:data][:attributes][:start_date]).to be_a(String)
