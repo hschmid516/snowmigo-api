@@ -4,8 +4,8 @@ RSpec.describe 'Trips' do
   describe 'Requests' do
     before :each do
       @users = create_list(:user, 4)
-      @resort = Resort.new({id: 1, resortName: 'Big Boi Mountain'})
-      @resort2 = Resort.new({id: 2, resortName: 'Small Gorl Mountain'})
+      @resort = Resort.new({id: 1, resortName: 'Big Gorl Mountain'})
+      @resort2 = Resort.new({id: 2, resortName: 'Small Boi Mountain'})
       @trips = create_list(:trip, 10, resort_id: @resort.id)
       @riders = create(:rider, trip: @trips[0], user: @users[0])
       @riders2 = create(:rider, trip: @trips[1], user: @users[1])
