@@ -84,10 +84,9 @@ RSpec.describe 'Trips' do
 
       end
 
-      it 'can create a trip' do
+      it 'can create a trip without a resort' do
         trip_params = {
           name: 'Teehee Trip',
-          resort_id: 1,
           start_date: '10/11/2021',
           end_date: '14/11/2021'
         }
@@ -101,13 +100,26 @@ RSpec.describe 'Trips' do
         expect(json[:data][:id]).to be_a(String)
         expect(json[:data][:type]).to eq('trip')
         expect(json[:data][:attributes][:name]).to be_a(String)
-        expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
         expect(json[:data][:attributes][:start_date]).to be_a(String)
         expect(json[:data][:attributes][:end_date]).to be_a(String)
         expect(json[:data][:attributes][:vote_status]).to be_a(String)
 
         expect(json[:data][:attributes]).to_not have_key(:created_at)
         expect(json[:data][:attributes]).to_not have_key(:updated_at)
+      end
+
+      it 'can create a trip with a resort' do
+        trip_params = {
+          name: 'Resort Trip',
+          start_date: '10/11/2021',
+          resort_id: 1,
+          end_date: '14/11/2021'
+        }
+
+        post '/api/v1/trips', params: trip_params
+
+        expect(response).to be_successful
+        expect(json[:data][:attributes][:resort_options].first[:resort_id]).to eq(1)
       end
 
       it 'can update a trip' do

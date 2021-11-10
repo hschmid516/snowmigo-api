@@ -37,6 +37,7 @@ RSpec.describe "Users", type: :request do
 
         expect(json[:data][:attributes][:trips]).to be_an Array
         expect(json[:data][:attributes][:trips].first).to be_a Hash
+
         expect(json[:data][:attributes][:trips].first[:data][:id]).to be_a(String)
         expect(json[:data][:attributes][:trips].first[:data][:type]).to be_a(String)
         expect(json[:data][:attributes][:trips].first[:data][:attributes]).to be_a(Hash)

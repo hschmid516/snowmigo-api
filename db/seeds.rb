@@ -11,14 +11,16 @@ Trip.destroy_all
 Rider.destroy_all
 
 users = FactoryBot.create_list(:user, 5)
-FactoryBot.create_list(:trip, 3)
+trips = FactoryBot.create_list(:trip, 3)
 FactoryBot.create(:rider, user_id: User.first.id, trip_id: Trip.first.id)
 FactoryBot.create(:rider, user_id: User.last.id, trip_id: Trip.first.id)
 FactoryBot.create(:rider, user_id: User.last.id, trip_id: Trip.last.id)
 FactoryBot.create(:friendship, user_id: users[0].id, friend_id: users[1].id)
 FactoryBot.create(:friendship, user_id: users[1].id, friend_id: users[0].id)
 FactoryBot.create(:friendship, user_id: users[2].id, friend_id: users[3].id)
-
+FactoryBot.create(:resort_option, trip_id: trips[0].id)
+FactoryBot.create(:resort_option, trip_id: trips[0].id)
+FactoryBot.create(:resort_option, trip_id: trips[1].id)
 # User.create(
 #   name: "Vice Admiral Holdo",
 #   email: "allene_runolfsdottir@hintz.org",
