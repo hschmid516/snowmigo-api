@@ -13,9 +13,11 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def create
-    trip = Trip.create(trip_params)
-    trip.resort_options.create({ resort_id: params[:resort_id] })
-    serialize(trip, status: :created)
+    @trip = Trip.create(trip_params)
+    if params[:resort_id].present?
+      @trip.resort_options.create({ resort_id: params[:resort_id] })
+    end
+    serialize(@trip, status: :created)
   end
 
   def update
