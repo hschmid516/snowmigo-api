@@ -5,4 +5,8 @@ class Rider < ApplicationRecord
   def self.by_user_and_trip(user_id, trip_id)
     where("user_id = ? AND trip_id = ?", user_id, trip_id).first
   end
+
+  def rider_name
+    user.name
+  end
 end
