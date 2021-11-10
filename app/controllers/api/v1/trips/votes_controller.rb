@@ -9,6 +9,11 @@ class Api::V1::Trips::VotesController < ApplicationController
     end
   end
 
+  def update_status
+    trip = Trip.find(params[:trip_id])
+    trip.update(vote_status: params[:status], resort_id: trip.max_vote_resort)
+  end
+
   private
 
   def valid_params
