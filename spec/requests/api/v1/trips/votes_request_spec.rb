@@ -26,6 +26,8 @@ RSpec.describe 'trips vote request' do
       expect(response).to be_successful
       rider_voted = Rider.by_user_and_trip(@users[0].id, @trips.first.id)
       expect(rider_voted.vote).to eq(@resort1.id)
+      expect(json[:data]).to be_a(String)
+      expect(json[:data]).to eq('Vote successfully updated!')
     end
 
     it 'closes the vote' do
@@ -33,10 +35,14 @@ RSpec.describe 'trips vote request' do
       patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[1].id}&resort_id=#{@resort1.id}"
       patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[2].id}&resort_id=#{@resort2.id}"
       patch "/api/v1/trips/#{@trips.first.id}/vote_status?open=false"
-      updated_trip = Trip.find(@trips.first.id)
+      # updated_trip = Trip.find(@trips.first.id)
       expect(response).to be_successful
-      expect(updated_trip.vote_status).to eq("closed")
-      expect(updated_trip.resort_id).to eq(@resort1.id)
+      # expect(updated_trip.vote_status).to eq("closed")
+      # expect(updated_trip.resort_id).to eq(@resort1.id)
+      expect(json[:data][:attributes][:resort_id]).to be_an(Integer)
+      expect(json[:data][:attributes][:resort_id]).to eq(@resort1.id)
+      expect(json[:data][:attributes][:vote_status]).to be_a(String)
+      expect(json[:data][:attributes][:vote_status]).to eq('closed')
     end
   end
 
