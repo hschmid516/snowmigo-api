@@ -13,8 +13,8 @@ RSpec.describe "Users", type: :request do
 
     describe "GET /show" do
       it "returns http success" do
-        resort = Resort.new({id: 1, resortName: 'Big Boi Mountain'})
-        trip = create(:trip, resort_id: resort.id)
+        resort = Resort.new({id: 1, resortName: 'Big Gorl Mountain'})
+        trip = create(:trip, resort_id: resort.id, resort_name: resort.name)
         create(:rider, trip: trip, user: users.first)
         create(:resort_option, trip: trip, resort_id: resort.id)
         create(:friendship, user_id: users[0].id, friend_id: users[1].id)
