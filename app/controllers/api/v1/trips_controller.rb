@@ -14,6 +14,7 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
 
   def create
     trip = Trip.create(trip_params)
+    trip.riders.create({user_id: params[:user_id], host: true})
     trip.resort_options.create({ resort_id: params[:resort_id] }) if params[:resort_id]
     serialize(trip, status: :created)
   end

@@ -35,19 +35,37 @@ RSpec.describe 'trips vote request' do
       patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[1].id}&resort_id=#{@resort1.id}"
       patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[2].id}&resort_id=#{@resort2.id}"
       patch "/api/v1/trips/#{@trips.first.id}/vote_status?open=false"
-      # updated_trip = Trip.find(@trips.first.id)
+
       expect(response).to be_successful
-      # expect(updated_trip.vote_status).to eq("closed")
-      # expect(updated_trip.resort_id).to eq(@resort1.id)
+
       expect(json[:data][:attributes][:resort_id]).to be_an(Integer)
       expect(json[:data][:attributes][:resort_id]).to eq(@resort1.id)
       expect(json[:data][:attributes][:vote_status]).to be_a(String)
       expect(json[:data][:attributes][:vote_status]).to eq('closed')
+      expect(json[:data][:attributes][:resort_options]).to be_an(Array)
+      expect(json[:data][:attributes][:resort_options].empty?).to eq(true)
+    end
+
+    it 're-opens the vote' do
+      patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[0].id}&resort_id=#{@resort1.id}"
+      patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[1].id}&resort_id=#{@resort1.id}"
+      patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[2].id}&resort_id=#{@resort2.id}"
+      patch "/api/v1/trips/#{@trips.first.id}/vote_status?open=false"
+      patch "/api/v1/trips/#{@trips.first.id}/vote_status?open=true"
+
+      expect(response).to be_successful
+
+      expect(json[:data][:attributes][:resort_id]).to be(nil)
+      expect(json[:data][:attributes][:vote_status]).to be_a(String)
+      expect(json[:data][:attributes][:vote_status]).to eq('open')
+      expect(json[:data][:attributes][:resort_options]).to be_an(Array)
+      expect(json[:data][:attributes][:resort_options].count).to eq(1)
+      expect(json[:data][:attributes][:resort_options].first[:data][:attributes][:resort_id]).to eq(@resort1.id)
     end
   end
 
   describe 'sad paths' do
-    it 'returns 400 if incorrect params' do
+    it 'vote returns 400 if incorrect params' do
       patch "/api/v1/trips/#{@trips.first.id}/vote?resort_id=#{@resort1.id}"
       expect(response.status).to eq(400)
 
@@ -55,6 +73,14 @@ RSpec.describe 'trips vote request' do
       expect(response.status).to eq(400)
 
       patch "/api/v1/trips/#{@trips.first.id}/vote"
+      expect(response.status).to eq(400)
+    end
+
+    it 'vote_status returns 400 if incorrect params' do
+      patch "/api/v1/trips/#{@trips.first.id}/vote_status?open=kjldsfhgdjsfh"
+      expect(response.status).to eq(400)
+
+      patch "/api/v1/trips/#{@trips.first.id}/vote_status"
       expect(response.status).to eq(400)
     end
   end
