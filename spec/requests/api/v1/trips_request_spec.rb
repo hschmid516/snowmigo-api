@@ -12,6 +12,7 @@ RSpec.describe 'Trips' do
       @riders3 = create(:rider, trip: @trips[1], user: @users[2])
       @riders4 = create(:rider, trip: @trips[2], user: @users[3])
       @riders5 = create(:rider, trip: @trips[9], user: @users[3])
+      @resort_option = create(:resort_option, trip: @trips.last, resort_id: @resort.id, resort_name: "Arapahoe Basin")
     end
 
     describe 'Index Endpoint' do
@@ -50,22 +51,37 @@ RSpec.describe 'Trips' do
         expect(json[:data][:attributes][:start_date]).to be_a(String)
         expect(json[:data][:attributes][:end_date]).to be_a(String)
         expect(json[:data][:attributes][:vote_status]).to be_a(String)
-        # expect(json[:included]).to be_a(Array)
-        # expect(json[:included].first).to be_a(Hash)
-        # expect(json[:included].first[:id]).to be_a(String)
-        # expect(json[:included].first[:attributes]).to be_a(Hash)
-        # expect(json[:included].first[:attributes][:user_id]).to be_a(Integer)
-        # expect(json[:included].first[:attributes][:trip_id]).to be_a(Integer)
-        # expect(json[:included].first[:attributes][:host]).to be_a(FalseClass)
-        # expect(json[:included].first[:attributes][:driver]).to be_a(FalseClass)
-        # expect(json[:included].first[:attributes][:budget]).to be_a(Integer)
+
+        expect(json[:data][:attributes][:riders]).to be_an(Array)
+        expect(json[:data][:attributes][:riders].first).to be_an(Hash)
+        expect(json[:data][:attributes][:riders].first[:data][:id]).to be_an(String)
+        expect(json[:data][:attributes][:riders].first[:data][:type]).to be_an(String)
+        expect(json[:data][:attributes][:riders].first[:data][:attributes]).to be_a(Hash)
+
+        rider_attr = json[:data][:attributes][:riders].first[:data][:attributes]
+        expect(rider_attr[:rider_name]).to be_a(String)
+        expect(rider_attr[:trip_id]).to be_a(Integer)
+        expect(rider_attr[:user_id]).to be_a(Integer)
+        expect(rider_attr[:budget]).to be_a(Integer)
+        expect(rider_attr[:host]).to be_a(FalseClass)
+        expect(rider_attr[:driver]).to be_a(FalseClass)
+
+
+        expect(json[:data][:attributes][:resort_options]).to be_an(Array)
+        expect(json[:data][:attributes][:resort_options].first).to be_an(Hash)
+        expect(json[:data][:attributes][:resort_options].first[:data]).to be_an(Hash)
+
+        resort_option_attr = json[:data][:attributes][:resort_options].first[:data][:attributes]
+        expect(resort_option_attr[:trip_id]).to be_an(Integer)
+        expect(resort_option_attr[:resort_id]).to be_an(Integer)
+        expect(resort_option_attr[:resort_name]).to be_an(String)
+        expect(resort_option_attr[:vote_count]).to be_an(Integer)
       end
 
       it 'returns an empty array without riders' do
         get "/api/v1/trips/#{@trips[8].id}"
         expect(response).to be_successful
-        expect(json[:included]).to be_a(Array)
-        expect(json[:included].first).to be(nil)
+
       end
 
       it 'can create a trip' do
