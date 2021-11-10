@@ -34,17 +34,21 @@ RSpec.describe "Users", type: :request do
         expect(json[:data][:attributes][:ski_or_board]).to be_a String
         expect(json[:data][:attributes][:emergency_name]).to be_a String
         expect(json[:data][:attributes][:emergency_number]).to be_a String
-        expect(json[:included]).to be_a(Array)
-        expect(json[:included].first).to be_a(Hash)
-        expect(json[:included].first[:id]).to be_a(String)
-        expect(json[:included].first[:attributes]).to be_a(Hash)
-        expect(json[:included].first[:attributes][:name]).to be_a(String)
-        expect(json[:included].first[:attributes][:resort_id]).to be_a(Integer)
-        expect(json[:included].first[:attributes][:resort_name]).to be_a(String)
-        expect(json[:included].first[:attributes][:start_date]).to be_a(String)
-        expect(json[:included].first[:attributes][:end_date]).to be_a(String)
-        expect(json[:included].last[:attributes][:user_id]).to be_a(Integer)
-        expect(json[:included].last[:attributes][:friend_id]).to be_a(Integer)
+        expect(json[:data][:attributes][:trips]).to be_an Array
+        expect(json[:data][:attributes][:trips].first).to be_a Hash
+        expect(json[:data][:attributes][:trips]).to be_an Array
+        binding.pry
+        # expect(json[:included]).to be_a(Array)
+        # expect(json[:included].first).to be_a(Hash)
+        # expect(json[:included].first[:id]).to be_a(String)
+        # expect(json[:included].first[:attributes]).to be_a(Hash)
+        # expect(json[:included].first[:attributes][:name]).to be_a(String)
+        # expect(json[:included].first[:attributes][:resort_id]).to be_a(Integer)
+        # expect(json[:included].first[:attributes][:resort_name]).to be_a(String)
+        # expect(json[:included].first[:attributes][:start_date]).to be_a(String)
+        # expect(json[:included].first[:attributes][:end_date]).to be_a(String)
+        # expect(json[:included].last[:attributes][:user_id]).to be_a(Integer)
+        # expect(json[:included].last[:attributes][:friend_id]).to be_a(Integer)
 
 
         expect(json[:data][:attributes]).to_not have_key :created_at
@@ -55,9 +59,9 @@ RSpec.describe "Users", type: :request do
         get "/api/v1/users/#{users.first.id}"
         expect(response).to be_successful
 
-        expect(json[:included]).to be_a(Array)
-        expect(json[:included].first).to be(nil)
-        expect(json[:included].last).to be(nil)
+        # expect(json[:included]).to be_a(Array)
+        # expect(json[:included].first).to be(nil)
+        # expect(json[:included].last).to be(nil)
 
       end
     end
