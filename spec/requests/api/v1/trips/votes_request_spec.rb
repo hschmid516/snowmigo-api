@@ -27,7 +27,19 @@ RSpec.describe 'trips vote request' do
       rider_voted = Rider.by_user_and_trip(@users[0].id, @trips.first.id)
       expect(rider_voted.vote).to eq(@resort1.id)
     end
+
+    it 'closes the vote' do
+      patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[0].id}&resort_id=#{@resort1.id}"
+      patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[1].id}&resort_id=#{@resort1.id}"
+      patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[2].id}&resort_id=#{@resort2.id}"
+      patch "/api/v1/trips/#{@trips.first.id}/vote_status?status=closed"
+      updated_trip = Trip.find(@trips.first.id)
+      expect(response).to be_successful
+      expect(updated_trip.vote_status).to eq("closed")
+      expect(updated_trip.resort_id).to eq(@resort1.id)
+    end
   end
+
   describe 'sad paths' do
     it 'returns 400 if incorrect params' do
       patch "/api/v1/trips/#{@trips.first.id}/vote?resort_id=#{@resort1.id}"
