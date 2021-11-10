@@ -32,7 +32,7 @@ RSpec.describe 'trips vote request' do
       patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[0].id}&resort_id=#{@resort1.id}"
       patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[1].id}&resort_id=#{@resort1.id}"
       patch "/api/v1/trips/#{@trips.first.id}/vote?user_id=#{@users[2].id}&resort_id=#{@resort2.id}"
-      patch "/api/v1/trips/#{@trips.first.id}/vote_status?status=closed"
+      patch "/api/v1/trips/#{@trips.first.id}/vote_status?open=false"
       updated_trip = Trip.find(@trips.first.id)
       expect(response).to be_successful
       expect(updated_trip.vote_status).to eq("closed")
