@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :resorts, only: [:index, :show]
       resources :trips, only: %i[index show create update destroy] do
         patch '/vote', to: 'trips/votes#update'
+        patch '/vote_status', to: 'trips/votes#update_status'
       end
       resources :friendships, only: [:create]
       resources :riders, only: [:create]

@@ -31,6 +31,7 @@ RSpec.describe 'Trips' do
           expect(resource[:attributes][:resort_id]).to be_an(Integer)
           expect(resource[:attributes][:start_date]).to be_a(String)
           expect(resource[:attributes][:end_date]).to be_a(String)
+          expect(resource[:attributes][:vote_status]).to be_a(String)
         end
       end
 
@@ -48,6 +49,7 @@ RSpec.describe 'Trips' do
         expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
         expect(json[:data][:attributes][:start_date]).to be_a(String)
         expect(json[:data][:attributes][:end_date]).to be_a(String)
+        expect(json[:data][:attributes][:vote_status]).to be_a(String)
         expect(json[:included]).to be_a(Array)
         expect(json[:included].first).to be_a(Hash)
         expect(json[:included].first[:id]).to be_a(String)
@@ -70,8 +72,8 @@ RSpec.describe 'Trips' do
         trip_params = {
           name: 'Teehee Trip',
           resort_id: 1,
-          start_date: '11/10/2021',
-          end_date: '11/14/2021'
+          start_date: '10/11/2021',
+          end_date: '14/11/2021'
         }
 
         post '/api/v1/trips', params: trip_params
@@ -79,16 +81,14 @@ RSpec.describe 'Trips' do
         expect(response).to be_successful
 
         expect(json).to be_a(Hash)
-
         expect(json[:data]).to be_a(Hash)
         expect(json[:data][:id]).to be_a(String)
         expect(json[:data][:type]).to eq('trip')
-
         expect(json[:data][:attributes][:name]).to be_a(String)
         expect(json[:data][:attributes][:resort_id]).to be_a(Integer)
         expect(json[:data][:attributes][:start_date]).to be_a(String)
-        # TODO: WHY DOES THIS COME UP AS NIL?
-        # expect(json[:data][:attributes][:end_date]).to be_a(String)
+        expect(json[:data][:attributes][:end_date]).to be_a(String)
+        expect(json[:data][:attributes][:vote_status]).to be_a(String)
 
         expect(json[:data][:attributes]).to_not have_key(:created_at)
         expect(json[:data][:attributes]).to_not have_key(:updated_at)
