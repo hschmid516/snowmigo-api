@@ -9,10 +9,14 @@ class TripSerializer
              :vote_status
 
   attribute :riders do |trip|
-    trip.riders
+    trip.riders.map do |rider|
+      RiderSerializer.new(rider)
+    end
   end
 
   attribute :resort_options do |trip|
-    trip.resort_options
+    trip.resort_options.map do |resort_opt|
+      ResortOptionSerializer.new(resort_opt)
+    end
   end
 end
