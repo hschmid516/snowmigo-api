@@ -7,4 +7,8 @@ class Trip < ApplicationRecord
       resort_opt.update(vote_count: resort_opt.counted_votes)
     end
   end
+
+  def max_vote_resort
+    resort_options.order(:vote_count, created_at: :desc).last.resort_id
+  end
 end
