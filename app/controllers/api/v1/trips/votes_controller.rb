@@ -10,8 +10,10 @@ class Api::V1::Trips::VotesController < ApplicationController
   end
 
   def update_status
-    trip = Trip.find(params[:trip_id])
-    trip.update(vote_status: params[:status], resort_id: trip.max_vote_resort)
+    if params[:open] == 'false'
+      trip = Trip.find(params[:trip_id])
+      trip.update(vote_status: 'closed', resort_id: trip.max_vote_resort)
+    end
   end
 
   private
