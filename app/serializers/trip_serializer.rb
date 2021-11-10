@@ -8,6 +8,11 @@ class TripSerializer
              :end_date,
              :vote_status
 
-  has_many :resort_options
-  has_many :riders
+  attribute :riders do |trip|
+    trip.riders
+  end
+
+  attribute :resort_options do |trip|
+    trip.resort_options
+  end
 end
