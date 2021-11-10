@@ -9,13 +9,16 @@ class UserSerializer
              :ski_or_board,
              :emergency_name,
              :emergency_number
+
   attribute :trips do |user|
-    user.trips
+    user.trips.map do |trip|
+      TripSerializer.new(trip)
+    end
   end
 
   attribute :friends do |user|
-    user.friends
+    user.friendships.map do |friendship|
+      FriendshipSerializer.new(friendship)
+    end
   end
-  # has_many :trips
-  # has_many :friendships
 end
