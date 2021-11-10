@@ -9,8 +9,7 @@ class Api::V1::TripsController < Api::V1::Trips::BaseController
   end
 
   def show
-    options = { include: [:resort_options, :riders] }
-    serialize(@trip, options: options)
+    serialize(@trip)
   end
 
   def create

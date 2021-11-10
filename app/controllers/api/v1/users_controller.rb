@@ -9,8 +9,7 @@ class Api::V1::UsersController < Api::V1::Users::BaseController
   end
 
   def show
-    options = { include: [:trips, :friendships] }
-    serialize(@user, options: options)
+    serialize(@user)
   end
 
   def create
