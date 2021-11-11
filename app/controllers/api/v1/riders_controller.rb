@@ -14,6 +14,6 @@ class Api::V1::RidersController < ApplicationController
     {trip_id: params[:trip_id],
       driver: params[:driver],
       budget: params[:budget],
-      user_id: find_friend.id}
+      user_id: params[:user_id]}
   end
 end
