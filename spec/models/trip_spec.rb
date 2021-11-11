@@ -5,6 +5,12 @@ RSpec.describe Trip, type: :model do
     it { should have_many(:resort_options) }
   end
 
+  describe 'validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:start_date) }
+    it { should validate_presence_of(:end_date) }
+  end
+
   describe 'instance methods' do
     before(:each) do
       @users = create_list(:user, 4)
