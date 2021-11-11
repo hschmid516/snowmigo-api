@@ -6,6 +6,10 @@ RSpec.describe Rider, type: :model do
     it { should belong_to(:user) }
   end
 
+  describe 'validations' do
+    it { should validate_numericality_of(:budget) }
+  end
+
   describe 'class methods' do
     it '#by_trip_and_user' do
       trips = create_list(:trip, 2)
