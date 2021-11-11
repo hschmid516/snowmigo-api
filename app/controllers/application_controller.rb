@@ -12,4 +12,12 @@ class ApplicationController < ActionController::API
   def record_not_found
    render json: { error: "404 Not Found" }, status: 404
   end
+
+  def find_friend
+    User.where(email: params[:email]).first
+  end
+
+  def invalid_friend
+    find_friend == nil
+  end
 end

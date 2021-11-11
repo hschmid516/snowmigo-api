@@ -1,12 +1,19 @@
 class Api::V1::RidersController < ApplicationController
   def create
-    rider = Rider.create!(rider_params)
-
-    render json: RiderSerializer.new(rider), status: :created
+    if invalid_friend
+      record_not_found
+    else
+      rider = Rider.create!(rider_params)
+      render json: RiderSerializer.new(rider), status: :created
+    end
   end
 
   private
+
   def rider_params
-    params.require(:rider).permit(:trip_id, :user_id, :driver, :budget)
+    {trip_id: params[:trip_id],
+      driver: params[:driver],
+      budget: params[:budget],
+      user_id: find_friend.id}
   end
 end

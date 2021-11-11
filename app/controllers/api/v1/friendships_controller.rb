@@ -14,19 +14,11 @@ class Api::V1::FriendshipsController < ApplicationController
 
   private
 
-  def find_friend
-    User.where(email: params[:email]).first
-  end
-
   def find_user
     User.find(params[:user_id])
   end
 
   def invalid_friendship
     find_friend == find_user || find_user.current_friend(find_friend)
-  end
-
-  def invalid_friend
-    find_friend == nil
   end
 end
