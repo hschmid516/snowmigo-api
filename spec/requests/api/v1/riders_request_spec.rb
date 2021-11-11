@@ -1,31 +1,85 @@
 require 'rails_helper'
 
 describe 'riders' do
-  describe 'creating riders' do
-    let(:user) { create(:user)}
-    let(:trip) { create(:trip)}
+  describe 'happy paths' do
+    describe 'creating riders' do
+      let(:user) { create(:user)}
+      let(:trip) { create(:trip)}
 
-    it 'can create riders' do
+      it 'can create riders' do
+        rider_params = {
+          trip_id: trip.id,
+          user_id: user.id,
+          driver: false,
+          budget: 300
+        }
+        post "/api/v1/riders", params: { rider: rider_params }
+        rider = Rider.last
+
+        expect(response).to have_http_status(:created)
+        expect(json).to be_a Hash
+        expect(json[:data]).to be_a Hash
+        expect(json[:data][:id]).to be_a String
+        expect(json[:data][:type]).to eq 'rider'
+        expect(json[:data][:attributes]).to be_a(Hash)
+        expect(json[:data][:attributes][:user_id]).to be_a(Integer)
+        expect(json[:data][:attributes][:trip_id]).to be_a(Integer)
+        expect(json[:data][:attributes][:host]).to be_a(FalseClass)
+        expect(json[:data][:attributes][:driver]).to be_a(FalseClass)
+        expect(json[:data][:attributes][:budget]).to be_an(Integer)
+        expect(rider.trip_id).to eq(rider_params[:trip_id])
+        expect(rider.user_id).to eq(rider_params[:user_id])
+        expect(rider.driver).to eq(false)
+        expect(rider.budget).to eq(300)
+      end
+    end
+  end
+  describe 'sad paths' do
+    before(:each) do
+      @trip = create(:trip)
+      @user = create(:user)
+    end
+    it '400 if no trip found' do
       rider_params = {
-        trip_id: trip.id,
-        user_id: user.id,
-        host: true,
+        trip_id: 75679678,
+        user_id: @user.id,
         driver: false,
         budget: 300
       }
       post "/api/v1/riders", params: { rider: rider_params }
-      rider = Rider.last
 
-      expect(response).to have_http_status(:created)
-      expect(json).to be_a Hash
-      expect(json[:data]).to be_a Hash
-      expect(json[:data][:id]).to be_a String
-      expect(json[:data][:type]).to eq 'rider'
-      expect(rider.trip_id).to eq(rider_params[:trip_id])
-      expect(rider.user_id).to eq(rider_params[:user_id])
-      expect(rider.host).to eq(true)
-      expect(rider.driver).to eq(false)
-      expect(rider.budget).to eq(300)
+      expect(response.status).to eq(400)
+    end
+    it '400 if no user found' do
+      rider_params = {
+        trip_id: @trip.id,
+        user_id: 40928753,
+        driver: false,
+        budget: 300
+      }
+      post "/api/v1/riders", params: { rider: rider_params }
+
+      expect(response.status).to eq(400)
+    end
+    it '400 if no trip or no user provided' do
+      rider_params = {
+        driver: false,
+        budget: 300
+      }
+      post "/api/v1/riders", params: { rider: rider_params }
+
+      expect(response.status).to eq(400)
+    end
+    it '400 if budget not number' do
+      rider_params = {
+        user_id: @user.id,
+        trip_id: @trip.id,
+        driver: false,
+        budget: 'kdflkgfh'
+      }
+      post "/api/v1/riders", params: { rider: rider_params }
+
+      expect(response.status).to eq(400)
     end
   end
 end
