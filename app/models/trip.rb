@@ -1,7 +1,10 @@
 class Trip < ApplicationRecord
   has_many :resort_options, dependent: :destroy
   has_many :riders, dependent: :destroy
+
   validates :name, presence: true
+  validates :start_date, presence: true
+  validates :end_date, presence: true
 
   def update_resort_votes
     resort_options.map do |resort_opt|
