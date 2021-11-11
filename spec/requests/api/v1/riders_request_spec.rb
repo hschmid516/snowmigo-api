@@ -9,6 +9,7 @@ describe 'riders' do
       it 'can create riders' do
         rider_params = {
           trip_id: trip.id,
+          user_id: user.id,
           email: user.email,
           driver: false,
           budget: 300
