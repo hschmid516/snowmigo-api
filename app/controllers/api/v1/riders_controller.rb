@@ -7,6 +7,6 @@ class Api::V1::RidersController < ApplicationController
 
   private
   def rider_params
-    params.require(:rider).permit(:trip_id, :user_id, :host, :driver, :budget)
+    params.require(:rider).permit(:trip_id, :user_id, :driver, :budget)
   end
 end
