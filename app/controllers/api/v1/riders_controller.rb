@@ -1,6 +1,6 @@
 class Api::V1::RidersController < ApplicationController
   def create
-    if invalid_friend
+    if !params[:user_id]
       record_not_found
     else
       rider = Rider.create!(rider_params)
