@@ -4,6 +4,10 @@ RSpec.describe ResortOption, type: :model do
   describe 'relationships' do
     it { should belong_to(:trip) }
   end
+  describe 'validations' do
+    it { should validate_numericality_of(:resort_id) }
+    it { should validate_presence_of(:resort_id) }
+  end
   describe 'instance methods' do
     before(:each) do
       @users = create_list(:user, 4)
