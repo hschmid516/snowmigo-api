@@ -82,18 +82,19 @@ RSpec.describe 'Trips' do
         get "/api/v1/trips/#{@trips[8].id}"
         expect(response).to be_successful
 
+        expect(json[:data][:attributes][:riders]).to be_an(Array)
+        expect(json[:data][:attributes][:riders].empty?).to eq(true)
       end
 
       it 'can create a trip and hosting rider without a resort' do
         trip_params = {
           user_id: @users[0].id,
           name: 'Teehee Trip',
-          start_date: '10/11/2021',
-          end_date: '14/11/2021'
+          start_date: '10-11-2021',
+          end_date: '14-11-2021'
         }
 
         post '/api/v1/trips', params: trip_params
-
         expect(response).to be_successful
 
         expect(json).to be_a(Hash)
@@ -116,9 +117,9 @@ RSpec.describe 'Trips' do
         trip_params = {
           user_id: @users[0].id,
           name: 'Resort Trip',
-          start_date: '10/11/2021',
+          start_date: '10-11-2021',
           resort_id: 1,
-          end_date: '14/11/2021'
+          end_date: '14-11-2021'
         }
 
         post '/api/v1/trips', params: trip_params
@@ -162,6 +163,64 @@ RSpec.describe 'Trips' do
         expect(Trip.count).to eq(9)
         expect{Trip.find(old_last_id)}.to raise_error(ActiveRecord::RecordNotFound)
       end
+    end
+  end
+  describe 'sad paths' do
+    before(:each) do
+      @user = create(:user)
+    end
+    context 'create' do
+      it '400 if no user found' do
+        trip_params = {
+          user_id: 0734750,
+          name: 'Resort Trip',
+          start_date: '10/11/2021',
+          resort_id: 1,
+          end_date: '14/11/2021'
+        }
+
+        post '/api/v1/trips', params: trip_params
+
+        expect(response.status).to eq(400)
+      end
+      it '400 if no end_date' do
+        trip_params = {
+          user_id: @user.id,
+          name: 'Resort Trip',
+          start_date: '10/11/2021',
+          resort_id: 1
+        }
+
+        post '/api/v1/trips', params: trip_params
+
+        expect(response.status).to eq(400)
+      end
+      it '400 if no start_date' do
+        trip_params = {
+          user_id: 0734750,
+          name: 'Resort Trip',
+          resort_id: 1,
+          end_date: '14/11/2021'
+        }
+
+        post '/api/v1/trips', params: trip_params
+
+        expect(response.status).to eq(400)
+      end
+      it '400 if no trip name' do
+        trip_params = {
+          user_id: 0734750,
+          start_date: '10/11/2021',
+          resort_id: 1,
+          end_date: '14/11/2021'
+        }
+
+        post '/api/v1/trips', params: trip_params
+
+        expect(response.status).to eq(400)
+      end
+    end
+    context 'update' do
     end
   end
 end
