@@ -70,16 +70,5 @@ describe 'riders' do
 
       expect(response.status).to eq(400)
     end
-    it '400 if budget not number' do
-      rider_params = {
-        user_id: @user.id,
-        trip_id: @trip.id,
-        driver: false,
-        budget: 'kdflkgfh'
-      }
-      post "/api/v1/riders", params: { rider: rider_params }
-
-      expect(response.status).to eq(400)
-    end
   end
 end
