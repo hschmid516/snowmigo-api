@@ -35,14 +35,17 @@ describe 'riders' do
       end
     end
   end
+
   describe 'sad paths' do
     before(:each) do
       @trip = create(:trip)
       @user = create(:user)
     end
+
     it '400 if no trip found' do
       rider_params = {
         trip_id: 75679678,
+        user_id: @user.id,
         email: @user.email,
         driver: false,
         budget: 300
@@ -51,6 +54,7 @@ describe 'riders' do
 
       expect(response.status).to eq(400)
     end
+
     it '404 if no user found' do
       rider_params = {
         trip_id: @trip.id,
@@ -62,6 +66,7 @@ describe 'riders' do
 
       expect(response.status).to eq(404)
     end
+
     it '404 if no trip or no user provided' do
       rider_params = {
         driver: false,
