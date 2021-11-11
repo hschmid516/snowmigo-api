@@ -1,13 +1,32 @@
 class Api::V1::FriendshipsController < ApplicationController
   def create
-    friendship = Friendship.create!(friendship_params)
-
-    render json: FriendshipSerializer.new(friendship), status: :created
+    if invalid_friend
+      record_not_found
+    else
+      if invalid_friendship
+          bad_request
+      else
+        friendship = Friendship.create({user_id: find_user.id, friend_id: find_friend.id})
+        render json: FriendshipSerializer.new(friendship), status: :created
+      end
+    end
   end
 
   private
 
-  def friendship_params
-    params.require(:friendship).permit(:user_id, :friend_id)
+  def find_friend
+    User.where(email: params[:email]).first
+  end
+
+  def find_user
+    User.find(params[:user_id])
+  end
+
+  def invalid_friendship
+    find_friend == find_user || find_user.current_friend(find_friend)
+  end
+
+  def invalid_friend
+    find_friend == nil
   end
 end
