@@ -13,6 +13,7 @@ The back-end half of a Consultancy project during weeks four and five during Mod
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </li>
     <li>
@@ -24,7 +25,6 @@ The back-end half of a Consultancy project during weeks four and five during Mod
     <li><a href="#deployment">Deployment</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -36,6 +36,30 @@ The back-end half of a Consultancy project during weeks four and five during Mod
   </p>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- CONTACT -->
+## Contact
+
+<p>
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
+</p>
+
+- [Henry Schmid](https://www.linkedin.com/in/henry-schmid)
+- [Erika Kischuk](https://www.linkedin.com/in/erika-kischuk)
+- [Laura Court](https://www.linkedin.com/in/andrew-massey-b06662194/)
+- [Khoi Nguyen](https://www.linkedin.com/in/khoifishpond/)
+- [Ozzie Osmonson](https://www.linkedin.com/in/ozzie-osmonson/)
+
+<p>
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />
+</p>
+
+- [Henry Schmid](https://github.com/hschmid516)
+- [Erika Kischuk](https://github.com/eakischuk)
+- [Laura Court](https://github.com/lmcourt)
+- [Khoi Nguyen](https://github.com/khoifishpond)
+- [Ozzie Osmonson](https://github.com/ozzman84)
 
 
 ### Built With
@@ -602,29 +626,5 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTACT -->
-## Contact
-
-<p>
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
-</p>
-
-- [Henry Schmid](https://www.linkedin.com/in/henry-schmid)
-- [Erika Kischuk](https://www.linkedin.com/in/erika-kischuk)
-- [Laura Court](https://www.linkedin.com/in/andrew-massey-b06662194/)
-- [Khoi Nguyen](https://www.linkedin.com/in/khoifishpond/)
-- [Ozzie Osmonson](https://www.linkedin.com/in/ozzie-osmonson/)
-
-<p>
-  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" />
-</p>
-
-- [Henry Schmid](https://github.com/hschmid516)
-- [Erika Kischuk](https://github.com/eakischuk)
-- [Laura Court](https://github.com/lmcourt)
-- [Khoi Nguyen](https://github.com/khoifishpond)
-- [Ozzie Osmonson](https://github.com/ozzman84)
-
 
 <p align="right">(<a href="#top">back to top</a>)</p>
