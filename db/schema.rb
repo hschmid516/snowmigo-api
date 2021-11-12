@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_06_195742) do
+ActiveRecord::Schema.define(version: 2021_11_11_061423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,20 +27,22 @@ ActiveRecord::Schema.define(version: 2021_11_06_195742) do
   create_table "resort_options", force: :cascade do |t|
     t.bigint "trip_id"
     t.integer "resort_id"
-    t.integer "vote_count"
+    t.integer "vote_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "resort_name"
     t.index ["trip_id"], name: "index_resort_options_on_trip_id"
   end
 
   create_table "riders", force: :cascade do |t|
     t.bigint "trip_id"
     t.bigint "user_id"
-    t.boolean "host"
+    t.boolean "host", default: false
     t.boolean "driver"
     t.integer "budget"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "vote"
     t.index ["trip_id"], name: "index_riders_on_trip_id"
     t.index ["user_id"], name: "index_riders_on_user_id"
   end
@@ -52,6 +54,8 @@ ActiveRecord::Schema.define(version: 2021_11_06_195742) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.string "resort_name"
+    t.string "vote_status", default: "open"
   end
 
   create_table "users", force: :cascade do |t|

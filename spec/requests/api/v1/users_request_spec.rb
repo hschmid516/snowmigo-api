@@ -3,20 +3,25 @@ require 'rails_helper'
 RSpec.describe "Users", type: :request do
   describe 'Setup' do
     let(:users) { create_list(:user, 10) }
-    # describe "GET /index" do
-    #   it "returns http success" do
-    #     get "/api/v1/"
-    #     expect(response).to have_http_status(:success)
-    #   end
-    # end
+
+    describe "GET /index" do
+      it "returns http success" do
+        get "/api/v1/users"
+        expect(response).to have_http_status(:success)
+      end
+    end
 
     describe "GET /show" do
       it "returns http success" do
+        resort = Resort.new({id: 1, resortName: 'Big Gorl Mountain'})
+        trip = create(:trip, resort_id: resort.id, resort_name: resort.name)
+        create(:rider, trip: trip, user: users.first)
+        create(:resort_option, trip: trip, resort_id: resort.id)
+        create(:friendship, user_id: users[0].id, friend_id: users[1].id)
+
         get "/api/v1/users/#{users.first.id}"
         expect(response).to be_successful
-
         expect(json).to be_a Hash
-
         expect(json[:data]).to be_a Hash
         expect(json[:data][:id]).to be_a String
         expect(json[:data][:type]).to eq 'user'
@@ -30,8 +35,40 @@ RSpec.describe "Users", type: :request do
         expect(json[:data][:attributes][:emergency_name]).to be_a String
         expect(json[:data][:attributes][:emergency_number]).to be_a String
 
+        expect(json[:data][:attributes][:trips]).to be_an Array
+        expect(json[:data][:attributes][:trips].first).to be_a Hash
+
+        expect(json[:data][:attributes][:trips].first[:data][:id]).to be_a(String)
+        expect(json[:data][:attributes][:trips].first[:data][:type]).to be_a(String)
+        expect(json[:data][:attributes][:trips].first[:data][:attributes]).to be_a(Hash)
+        expect(json[:data][:attributes][:trips].first[:data][:attributes][:name]).to be_a String
+        expect(json[:data][:attributes][:trips].first[:data][:attributes][:resort_id]).to be_an Integer
+        expect(json[:data][:attributes][:trips].first[:data][:attributes][:resort_name]).to be_a String
+        expect(json[:data][:attributes][:trips].first[:data][:attributes][:start_date]).to be_a String
+        expect(json[:data][:attributes][:trips].first[:data][:attributes][:end_date]).to be_a String
+        expect(json[:data][:attributes][:trips].first[:data][:attributes][:vote_status]).to be_a String
+
+        expect(json[:data][:attributes][:friends]).to be_an Array
+        expect(json[:data][:attributes][:friends].first[:data][:attributes][:friend_name]).to be_a String
+        expect(json[:data][:attributes][:friends].first[:data][:attributes][:friend_id]).to be_a Integer
+        expect(json[:data][:attributes][:friends].first[:data][:attributes][:user_id]).to be_a Integer
+        # expect(json[:data][:attributes][:friends].first[:data][:attributes][:ski_pass]).to be_a String
+        # expect(json[:data][:attributes][:friends].first[:data][:attributes][:address]).to be_a String
+        # expect(json[:data][:attributes][:friends].first[:data][:attributes][:ski_or_board]).to be_a String
+        # expect(json[:data][:attributes][:friends].first[:data][:attributes][:emergency_name]).to be_a String
+        # expect(json[:data][:attributes][:friends].first[:data][:attributes][:emergency_number]).to be_a String
+
         expect(json[:data][:attributes]).to_not have_key :created_at
         expect(json[:data][:attributes]).to_not have_key :updated_at
+      end
+
+      it 'returns an empty array without friends/friend' do
+        get "/api/v1/users/#{users.first.id}"
+        expect(response).to be_successful
+
+        expect(json[:data][:attributes][:trips]).to be_an Array
+        expect(json[:data][:attributes][:trips].count).to eq(0)
+
       end
     end
 

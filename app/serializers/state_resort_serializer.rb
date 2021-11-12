@@ -1,4 +1,4 @@
 class StateResortSerializer
   include JSONAPI::Serializer
-  attributes :name
+  attributes :name, :logo
 end
